@@ -1,5 +1,5 @@
 const token = document.querySelector("meta[name='csrf-token']").content;
-const headers = { "Content-Type": "application/json", "X-CSRF-Tojen": token }
+const headers = { "Content-Type": "application/json", "X-CSRF-Token": token }
 
 document.addEventListener('DOMContentLoaded', ()=> {
   document.querySelectorAll(".actions .like").forEach(button => {
@@ -19,7 +19,7 @@ function like(event){
   fetch("/likes", {
     method: "POST",
     headers,
-    body: JSON.stringify({ like: { post_id: actionElement.dataset.postId}})
+    body: JSON.stringify({ like: { post_id: actionElement.dataset.postId }})
   })
   .then(response => response.json())
   .then(json => handleLikeFeatureCallback({ ...json, actionElement }))
@@ -37,7 +37,7 @@ function dislike(event){
 
 function handleLikeFeatureCallback({id, successful, actionElement}){
   if(successful){
-    //actionElement.dataset.likeId = id;
+    actionElement.dataset.likeId = id;
 
     actionElement.querySelectorAll(".like, .dislike").forEach(div => {
       div.classList.toggle("hidden");
