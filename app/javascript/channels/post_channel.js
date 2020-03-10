@@ -9,8 +9,11 @@ consumer.subscriptions.create("PostChannel", {
     // Called when the subscription has been terminated by the server
   },
 
-  received(data) {
-    
-    // Called when there's incoming data on the websocket for this channel
+  received({ post_created }) {
+    const template = document.createElement("template");
+    template.innerHTML = post_created;
+
+    const posts = document.querySelector(".posts");
+    posts.prepend(template.content.firstChild);
   }
 });
